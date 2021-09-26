@@ -1,13 +1,17 @@
 package gui;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 
 public class ApplicationUI extends BorderPane {
     private PresentationModel pm;
     private TopArea topArea;
-    //private CenterArea centerArea;
-    //private BottomArea bottomArea;
+    private BottomArea bottomArea;
+    private Menu file;
+    private Menu help;
+    private MenuBar menuBar;
 
     public ApplicationUI(){
         this.pm = new PresentationModel();
@@ -16,14 +20,27 @@ public class ApplicationUI extends BorderPane {
     }
 
     private void initializeControls() {
-        //bottomArea = new BottomArea(pm);
-        //centerArea = new CenterArea(pm);
+        bottomArea = new BottomArea(pm);
         topArea = new TopArea(pm);
+        createMenuBar();
+
     }
     private void layoutControls() {
+        this.setTop(menuBar);
         this.setPadding(new Insets(20));
-        //this.setBottom(bottomArea);
+
+        this.setBottom(bottomArea);
         //this.setCenter(centerArea);
-        this.setTop(topArea);
+        this.setCenter(topArea);
+
+
+
+    }
+
+    private void createMenuBar() {
+        file = new Menu("File");
+        help = new Menu("help");
+        menuBar = new MenuBar();
+        menuBar.getMenus().addAll(file, help);
     }
 }

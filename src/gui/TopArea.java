@@ -1,11 +1,15 @@
 package gui;
 
+import javafx.beans.property.Property;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -23,9 +27,8 @@ public class TopArea extends HBox {
     private TextField decimalB;
     private Paint color;
     private Rectangle rectangle;
-
-
-
+    private VBox sliderBox;
+    private VBox textBox;
 
 
     public TopArea(PresentationModel pm) {
@@ -36,8 +39,12 @@ public class TopArea extends HBox {
     }
 
     private void initializeLayout() {
-        setPadding(new Insets(10));
-        this.getChildren().addAll(sliderR, sliderG, sliderB, decimalR, decimalG, decimalB, rectangle);
+        //setPadding(new Insets(10));
+        sliderBox = new VBox(sliderR, sliderG, sliderB);
+        sliderBox.setSpacing(10);
+        textBox = new VBox(decimalR, decimalG, decimalB);
+        //sliderBox.setMargin(sliderR, new Insets(20,20,20,20));
+        this.getChildren().addAll(sliderBox, textBox);
     }
 
     private void initializeControls() {
@@ -48,8 +55,8 @@ public class TopArea extends HBox {
         decimalG = new TextField();
         decimalB = new TextField();
 
-        color = new Color(pm.getRed(), pm.getGreen(), pm.getBlue(), 0);
-        rectangle = new Rectangle();
+        //color = new Color(55, 55, 55, 0);
+        rectangle = new Rectangle(120, 120);
         sliderR.valueProperty().bindBidirectional(pm.redProperty());
         decimalR.textProperty().bindBidirectional(pm.redProperty(), new NumberStringConverter());
         sliderG.valueProperty().bindBidirectional(pm.greenProperty());
@@ -57,8 +64,9 @@ public class TopArea extends HBox {
         sliderB.valueProperty().bindBidirectional(pm.blueProperty());
         decimalB.textProperty().bindBidirectional(pm.blueProperty(), new NumberStringConverter());
 
-        //Wie kann ich hier die Farben mit den einzelnen pm-Properties binden?
-        rectangle.setFill(Color.rgb((int)pm.getRed(),(int)pm.getGreen(),(int)pm.getBlue()));
+
     }
+
+
 
 }
